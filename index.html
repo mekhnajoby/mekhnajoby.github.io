@@ -896,7 +896,9 @@ body {
             color: var(--primary-light);
             transform: translateX(5px);
         }
-
+        .hidden-certificate {
+         display: none;
+        }
         /* Blog Section */
         #blog {
             background: var(--white);
@@ -1098,6 +1100,75 @@ body {
         .contact-text a:hover {
             color: white;
         }
+        /* Contact Form Styles */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    max-width: 1200px;
+}
+
+.contact-form {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px 10px 5px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-bottom-color: var(--primary);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-group label {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.form-group input:focus + label,
+.form-group input:valid + label,
+.form-group textarea:focus + label,
+.form-group textarea:valid + label {
+    top: 0;
+    left: 5px;
+    font-size: 0.8rem;
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+}
 
         /* Footer */
         footer {
@@ -1637,63 +1708,79 @@ body {
         </div>
     </section>
 
-    <!-- Certifications Section -->
-    <section id="certifications" data-aos="fade-up">
-        <div class="container">
-            <h2 class="section-title">Certifications</h2>
-            <div class="certifications-grid">
+   <!-- Certifications Section -->
+<section id="certifications" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certifications-grid">
+            <!-- First 3 certificates (visible by default) -->
+            <div class="certification-card" data-aos="fade-up">
+                <div class="certification-img">
+                    <img src="nceda.jpg" alt="Conference Presentation Certificate" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Paper Presentation – Equitable Digital Access</h3>
+                    <p>Mozilla RCC & Marian College | Completed: Feb 2025</p>
+                    <p>Presented a research paper titled <em>"Improved Navigation for Smart Specs: A Change Agent for Blind Individuals"</em> at the National Conference on Equitable Digital Access.</p>
+                    <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_certificate-of-merit-responsible-computing-activity-7339647426347077634-5sUu?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-                <div class="certification-card" data-aos="fade-up">
-    <div class="certification-img">
-        <img src="nceda.jpg" alt="Conference Presentation Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Paper Presentation – Equitable Digital Access</h3>
-        <p>Mozilla RCC & Marian College | Completed: Feb 2025</p>
-        <p>Presented a research paper titled <em>"Improved Navigation for Smart Specs: A Change Agent for Blind Individuals"</em> at the National Conference on Equitable Digital Access.</p>
-        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_certificate-of-merit-responsible-computing-activity-7339647426347077634-5sUu?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
+            <div class="certification-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="certification-img">
+                    <img src="python.jpg" alt="Python for Data Science Certificate" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Python for Data Science</h3>
+                    <p>IIT Madras – NPTEL | Completed: Aug 2024</p>
+                    <p>Earned an Elite certification by mastering Python fundamentals, data analysis, and core data science concepts through a 4-week IIT Madras NPTEL course.</p>
+                    <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_certification-of-completion-python-for-data-activity-7339668818576797696-BeVt?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-<div class="certification-card" data-aos="fade-up" data-aos-delay="100">
-    <div class="certification-img">
-        <img src="python.jpg" alt="Python for Data Science Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Python for Data Science</h3>
-        <p>IIT Madras – NPTEL | Completed: Aug 2024</p>
-        <p>Earned an Elite certification by mastering Python fundamentals, data analysis, and core data science concepts through a 4-week IIT Madras NPTEL course.</p>
-        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_certification-of-completion-python-for-data-activity-7339668818576797696-BeVt?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
+            <div class="certification-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="certification-img">
+                    <img src="uiux.jpg" alt="UI/UX Design Certificate" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Website UI/UX Designing using ChatGPT</h3>
+                    <p>Simplilearn SkillUp | Completed: May 2025</p>
+                    <p>Learned UI/UX principles and leveraged AI tools like ChatGPT to create modern, user-friendly website designs through an industry-recognized course.</p>
+                    <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_exploring-the-world-of-uiux-design-happy-activity-7339650400247037953-Zgh7?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-<div class="certification-card" data-aos="fade-up" data-aos-delay="200">
-    <div class="certification-img">
-        <img src="uiux.jpg" alt="UI/UX Design Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Website UI/UX Designing using ChatGPT</h3>
-        <p>Simplilearn SkillUp | Completed: May 2025</p>
-        <p>Learned UI/UX principles and leveraged AI tools like ChatGPT to create modern, user-friendly website designs through an industry-recognized course.</p>
-        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_exploring-the-world-of-uiux-design-happy-activity-7339650400247037953-Zgh7?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
+            <!-- Additional certificates (hidden by default) -->
+            <div class="certification-card hidden-certificate" data-aos="fade-up">
+                <div class="certification-img">
+                    <img src="placeholder.jpg" alt="Additional Certificate 1" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Additional Certificate 1</h3>
+                    <p>Issuing Organization | Completed: Month Year</p>
+                    <p>Description of what you learned and accomplished with this certification.</p>
+                    <a href="#" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-                <div class="certification-card" data-aos="fade-up" data-aos-delay="200">
-    <div class="certification-img">
-        <img src="wordpress.jpg" alt="WordPress Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Introduction to WordPress</h3>
-        <p>Simplilearn SkillUp | Completed: July 2025</p>
-        <p>Successfully completed a comprehensive course on WordPress fundamentals. Demonstrated initiative and commitment to skill development in web creation using WordPress.</p>
-     <!--   <a href="#" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>-->
-    </div>
-</div>
-
+            <div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="100">
+                <div class="certification-img">
+                    <img src="placeholder.jpg" alt="Additional Certificate 2" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Additional Certificate 2</h3>
+                    <p>Issuing Organization | Completed: Month Year</p>
+                    <p>Description of what you learned and accomplished with this certification.</p>
+                    <a href="#" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
-    </section>
+        
+        <div class="view-more-container" style="text-align: center; margin-top: 30px;">
+            <button id="view-more-btn" class="btn">View More Certificates</button>
+        </div>
+    </div>
+</section>
 
     <!-- Blog Section -->
     <section id="blog" data-aos="fade-up">
@@ -1774,45 +1861,74 @@ body {
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" data-aos="fade-up">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Connect</h3>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <h4>Email: &nbsp</h4>
-                            <div class="contact-text">
-                                <a href="mailto:mekhnajoby2005@gmail.com">mekhnajoby2005@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <h4>Phone: &nbsp</h4>
-                            <div class="contact-text">
-                                <a href="tel:+918884834606">+91 8884834606</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <h4>Location: &nbsp</h4>
-                            <div class="contact-text">
-                                <p>Kottayam, Kerala, India</p>
-                            </div>
+<!-- Contact Section -->
+<section id="contact" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Let's Connect</h3>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email: &nbsp</h4>
+                        <div class="contact-text">
+                            <a href="mailto:mekhnajoby2005@gmail.com">mekhnajoby2005@gmail.com</a>
                         </div>
                     </div>
-                    <div class="social-links">
-                        <a href="https://linkedin.com/in/mekhna-alphons-joby" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://github.com/mekhna05" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://www.instagram.com/mekhna_joby/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <h4>Phone: &nbsp</h4>
+                        <div class="contact-text">
+                            <a href="tel:+918884834606">+91 8884834606</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Location: &nbsp</h4>
+                        <div class="contact-text">
+                            <p>Kottayam, Kerala, India</p>
+                        </div>
                     </div>
                 </div>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/mekhna-alphons-joby" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/mekhna05" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/mekhna_joby/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
             </div>
+            
+            <!-- Contact Form -->
+            <form id="contact-form" class="contact-form" method="POST">
+                <h3 style="text-align: center; margin-bottom: 20px; color: white;">Send Me a Message</h3>
+                
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required>
+                    <label for="name">Your Name</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Your Email</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" required>
+                    <label for="subject">Subject</label>
+                </div>
+                
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <label for="message">Your Message</label>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                
+                <div id="form-message" style="margin-top: 20px; text-align: center;"></div>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
@@ -2137,6 +2253,65 @@ particlesJS('particles-js', {
                 }
             });
         });
+        // View More Certificates
+const viewMoreBtn = document.getElementById('view-more-btn');
+const hiddenCertificates = document.querySelectorAll('.hidden-certificate');
+let showingAll = false;
+
+viewMoreBtn.addEventListener('click', () => {
+    hiddenCertificates.forEach(cert => {
+        cert.classList.toggle('hidden-certificate');
+    });
+    
+    showingAll = !showingAll;
+    viewMoreBtn.textContent = showingAll ? 'View Less' : 'View More Certificates';
+    
+    // Reinitialize AOS for newly visible elements
+    AOS.refresh();
+});
+        // Contact Form Submission
+const contactForm = document.getElementById('contact-form');
+const formMessage = document.getElementById('form-message');
+
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(contactForm);
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    
+    // Change button text and disable it
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    try {
+        const response = await fetch('send_email.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.text();
+        
+        if (response.ok) {
+            formMessage.textContent = result;
+            formMessage.style.color = '#4BB543';
+            contactForm.reset();
+        } else {
+            throw new Error(result);
+        }
+    } catch (error) {
+        formMessage.textContent = error.message || 'Failed to send message. Please try again later.';
+        formMessage.style.color = '#ff3333';
+        console.error('Error:', error);
+    } finally {
+        submitBtn.textContent = 'Send Message';
+        submitBtn.disabled = false;
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            formMessage.textContent = '';
+        }, 5000);
+    }
+});
     </script>
 </body>
 </html>
