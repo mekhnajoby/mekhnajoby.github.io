@@ -828,7 +828,10 @@ body {
             font-weight: 500;
             margin-bottom: 15px;
         }
-
+    <style>
+        .hidden-education {
+            display: none;
+        }
         /* Certifications Section */
         #certifications {
             background: var(--light);
@@ -1654,12 +1657,13 @@ body {
         </div>
     </section>
 
-    <!-- Education Section -->
+   <!-- Education Section -->
     <section id="education" data-aos="fade-up">
         <div class="container">
             <h2 class="section-title">Education & Achievements</h2>
             <div class="education-container">
 
+                <!-- First 3 awards (visible by default) -->
                 <div class="education-item">
                     <span class="education-date">Jan 7, 2025</span>
                     <h3>Marian Silver Band Award Award</h3>
@@ -1678,32 +1682,38 @@ body {
                     <p>For scoring 9.62 SCPA in Third Semester of UG Program in BCA</p>
                 </div>
 
-                <div class="education-item">
+                <!-- Remaining education items (hidden by default) -->
+                <div class="education-item hidden-education">
                     <span class="education-date">Oct 25, 2024</span>
                     <h3>Marian Silver Band Award Award</h3>
                     <p>For scoring 9.05 SCPA in First Semester and 9.24 SCPA in Second Semester of UG Program in BCA</p>
                 </div>
 
-                <div class="education-item">
+                <div class="education-item hidden-education">
                     <span class="education-date">2023 - Present</span>
                     <h3>Bachelor of Computer Applications (BCA)</h3>
                     <p>Marian College Kuttikkanam, Kerala</p>
                     <p><strong>GPA: 9.33</strong></p>
                 </div>
                 
-                <div class="education-item">
+                <div class="education-item hidden-education">
                     <span class="education-date">March 2023</span>
                     <h3>Higher Secondary School (PCBC-ISC)</h3>
                     <p>Kuriakose Elias English Medium School, Mannanam, Kerala</p>
                     <p><strong>Score: 95%</strong></p>
                 </div>
                 
-                <div class="education-item">
+                <div class="education-item hidden-education">
                     <span class="education-date">March 2021</span>
                     <h3>Higher School (ICSE)</h3>
                     <p>St. Francis School ICSE, Koramangala, Bangalore</p>
                     <p><strong>Score: 97%</strong></p>
                 </div>
+            </div>
+            
+            <!-- Add View More button -->
+            <div class="view-more-container" style="text-align: center; margin-top: 30px;">
+                <button id="view-more-education-btn" class="btn">View More</button>
             </div>
         </div>
     </section>
@@ -2324,6 +2334,23 @@ contactForm.addEventListener('submit', async (e) => {
         }, 5000);
     }
 });
+        const viewMoreEducationBtn = document.getElementById('view-more-education-btn');
+        const hiddenEducationItems = document.querySelectorAll('.hidden-education');
+        let showingAllEducation = false;
+
+        viewMoreEducationBtn.addEventListener('click', () => {
+            hiddenEducationItems.forEach(item => {
+                item.classList.toggle('hidden-education');
+            });
+            
+            showingAllEducation = !showingAllEducation;
+            viewMoreEducationBtn.textContent = showingAllEducation ? 'Show Less' : 'View More';
+            
+            // Reinitialize AOS for newly visible elements
+            AOS.refresh();
+            
+            // Trigger the education items animation for newly visible items
+            checkEducationItems();
     </script>
 </body>
 </html>
