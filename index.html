@@ -783,51 +783,89 @@ body {
             background: var(--white);
         }
 
-        .education-container {
-            max-width: 800px;
-            margin: 0 auto;
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
 
-        .education-item {
+        .education-category,
+        .achievements-category {
             background: var(--white);
             padding: 30px;
             border-radius: 15px;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(50px);
         }
 
-        .education-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        .education-category h3,
+        .achievements-category h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .education-item h3 {
+        .education-category h3 i,
+        .achievements-category h3 i {
+            color: var(--secondary);
+        }
+
+        .education-item,
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .education-item:hover,
+        .achievement-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .education-item h4,
+        .achievement-item h4 {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--dark);
         }
 
-        .education-item p {
+        .education-date,
+        .achievement-date {
+            display: inline-block;
+            background: var(--gradient-main);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .institution {
             color: var(--gray);
             margin-bottom: 5px;
         }
 
-        .education-date {
-            display: inline-block;
-            background: var(--gradient-main);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 15px;
+        .score {
+            font-weight: 600;
+            color: var(--primary);
         }
+
+        @media (max-width: 992px) {
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Certifications Section */
         #certifications {
             background: var(--light);
@@ -835,8 +873,119 @@ body {
 
         .certifications-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            width: 100%;
+        }
+        
+        .certification-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .certification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .certification-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .certification-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .certification-card:hover .certification-img img {
+            transform: scale(1.05);
+        }
+        
+        .certification-info {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .certification-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        .certification-info p:first-of-type {
+            color: var(--primary);
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .certification-info p:last-of-type {
+            margin: 0 0 15px 0;
+            color: var(--dark);
+            flex-grow: 1;
+        }
+        
+        .certification-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: auto;
+            transition: color 0.3s ease;
+        }
+        
+        .certification-link:hover {
+            color: var(--primary-dark);
+        }
+        
+        .certification-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .certification-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        .hidden-certificate {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .hidden-certificate.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .certification-card {
@@ -895,9 +1044,41 @@ body {
             color: var(--primary-light);
             transform: translateX(5px);
         }
+
         .hidden-certificate {
-         display: none;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
+        
+        .hidden-certificate.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .view-more-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #view-more-btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #view-more-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(241, 140, 24, 0.2);
+        }
+
         /* Blog Section */
         #blog {
             background: var(--white);
@@ -1516,7 +1697,7 @@ body {
                     </div>
                     <div class="project-info">
                         <h3>Tiffinly</h3>
-                        <p>Home cooked meal subscription platform with role-based access control. Connects home cooks with customers for healthy, homemade meals (In Development).</p>
+                        <p>Web based meal subscription platform with role-based access control. It streamlines the entire tiffin service process—from meal planning and subscription to delivery tracking and feedback—ensuring efficiency, transparency, and user satisfaction.</p>
                         
                         <div class="project-details">
                             <h4>Key Features:</h4>
@@ -1540,46 +1721,62 @@ body {
                 </div>
                 
                 <!-- Project 3 -->
-                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="project-img">
-                        <div class="project-slideshow">
-                            <div class="project-slide active">
-                                <img src="portfolio1.jpg" alt="Portfolio Homepage" class="lazy" loading="lazy">
-                            </div>
-                            <div class="project-slide">
-                                <img src="portfolio2.jpg" alt="Portfolio Projects" class="lazy" loading="lazy">
-                            </div>
-                            <div class="project-slide">
-                                <img src="portfolio3.jpg" alt="Portfolio Mobile View" class="lazy" loading="lazy">
-                            </div>
-                            <div class="project-slide-nav">
-                                <div class="slide-dot active"></div>
-                                <div class="slide-dot"></div>
-                                <div class="slide-dot"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Portfolio Website</h3>
-                        <p>Modern, responsive personal portfolio website showcasing skills, projects and education with smooth animations and interactive elements.</p>
-                        
-                        <div class="project-details">
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>Fully responsive design</li>
-                                <li>Interactive animations and transitions</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="project-tech">
-                            <span class="tech-tag">HTML</span>
-                            <span class="tech-tag">CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Responsive Design</span>
-                        </div>
-            
-                    </div>
-                </div>
+<div class="project-card" data-aos="fade-up" data-aos-delay="200">
+    <div class="project-img">
+        <div class="project-slideshow">
+            <div class="project-slide active">
+                <img src="redcycle1.png" alt="RedCycle Mars Habitat Recycling System" class="lazy" loading="lazy">
+            </div>
+            <div class="project-slide">
+                <img src="redcycle2.png" alt="RedCycle Waste Processing Dashboard" class="lazy" loading="lazy">
+            </div>
+            <div class="project-slide">
+                <img src="redcycle3.png" alt="RedCycle Map Visualization Jezero Crater" class="lazy" loading="lazy">
+            </div>
+            <div class="project-slide-nav">
+                <div class="slide-dot active"></div>
+                <div class="slide-dot"></div>
+                <div class="slide-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-info">
+        <h3>RedCycle</h3>
+        <p>
+            RedCycle is a Mars habitat recycling simulator developed for the 
+            <strong>NASA Space Apps Challenge 2025 – Jezero Crater Waste Reuse</strong> theme.
+            It models a constrained habitat’s circular waste management system, focusing on 
+            reuse-first strategies, energy and water optimization, and spatial visualization of 
+            recyclable materials on Mars.
+        </p>
+
+        <div class="project-details">
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Simulates material recovery through configurable processing modules</li>
+                <li>Implements reuse-first waste pooling and secondary recovery logic</li>
+                <li>Eco and Ultra Eco modes to minimize resource inputs</li>
+                <li>Interactive Mars map visualizing waste distribution and weighted centroids</li>
+            </ul>
+        </div>
+
+        <div class="project-tech">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Vite</span>
+            <span class="tech-tag">Tailwind CSS</span>
+            <span class="tech-tag">Node.js</span>
+        </div>
+
+        <a href="https://red-cycle.vercel.app/" target="_blank" class="project-link">
+            Visit Project <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+
+               
             </div>
         </div>
     </section>
@@ -1588,49 +1785,58 @@ body {
 <section id="education" data-aos="fade-up">
     <div class="container">
         <h2 class="section-title">Education & Achievements</h2>
-        <div class="education-container"></div>
-            <div class="education-item">
-                <span class="education-date">Jan 7, 2025</span>
-                <h3>Marian Silver Band Award Award</h3>
-                <p>For scoring 9.43 SCPA in Fourth Semester of UG Program in BCA</p>
+        <div class="education-grid">
+            <!-- Education -->
+            <div class="education-category">
+                <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                <div class="education-item">
+                    <span class="education-date">2023 - Present</span>
+                    <h4>Bachelor of Computer Applications (BCA)</h4>
+                    <p class="institution">Marian College Kuttikkanam, Kerala</p>
+                    <p class="score"><strong>GPA: 9.33</strong></p>
+                </div>
+                
+                <div class="education-item">
+                    <span class="education-date">March 2023</span>
+                    <h4>Higher Secondary School (PCBC-ISC)</h4>
+                    <p class="institution">Kuriakose Elias English Medium School, Mannanam, Kerala</p>
+                    <p class="score"><strong>Score: 95%</strong></p>
+                </div>
+                
+                <div class="education-item">
+                    <span class="education-date">March 2021</span>
+                    <h4>Higher School (ICSE)</h4>
+                    <p class="institution">St. Francis School ICSE, Koramangala, Bangalore</p>
+                    <p class="score"><strong>Score: 97%</strong></p>
+                </div>
             </div>
 
-            <div class="education-item">
-                <span class="education-date">2024-2025</span>
-                <h3>Proficiency Award</h3>
-                <p>For scoring 9.62 SGPA in Third Semester of UG Program in BCA</p>
-            </div>
+            <!-- Achievements -->
+            <div class="achievements-category">
+                <h3><i class="fas fa-trophy"></i> Awards & Achievements</h3>
+                <div class="achievement-item">
+                    <span class="achievement-date">Jan 7, 2025</span>
+                    <h4>Marian Silver Band Award</h4>
+                    <p>For scoring 9.43 SCPA in Fourth Semester of UG Program in BCA</p>
+                </div>
 
-            <div class="education-item">
-                <span class="education-date">Jan 7, 2025</span>
-                <h3>Marian Golden Band Award Award</h3>
-                <p>For scoring 9.62 SCPA in Third Semester of UG Program in BCA</p>
-            </div>
-             <div class="education-item">
-                <span class="education-date">Oct 25, 2024</span>
-                <h3>Marian Silver Band Award Award</h3>
-                <p>For scoring 9.05 SCPA in First Semester and 9.24 SCPA in Second Semester of UG Program in BCA</p>
-            </div>
+                <div class="achievement-item">
+                    <span class="achievement-date">2024-2025</span>
+                    <h4>Proficiency Award</h4>
+                    <p>For scoring 9.62 SGPA in Third Semester of UG Program in BCA</p>
+                </div>
 
-            <div class="education-item">
-                <span class="education-date">2023 - Present</span>
-                <h3>Bachelor of Computer Applications (BCA)</h3>
-                <p>Marian College Kuttikkanam, Kerala</p>
-                <p><strong>GPA: 9.33</strong></p>
-            </div>
-            
-            <div class="education-item">
-                <span class="education-date">March 2023</span>
-                <h3>Higher Secondary School (PCBC-ISC)</h3>
-                <p>Kuriakose Elias English Medium School, Mannanam, Kerala</p>
-                <p><strong>Score: 95%</strong></p>
-            </div>
-            
-            <div class="education-item">
-                <span class="education-date">March 2021</span>
-                <h3>Higher School (ICSE)</h3>
-                <p>St. Francis School ICSE, Koramangala, Bangalore</p>
-                <p><strong>Score: 97%</strong></p>
+                <div class="achievement-item">
+                    <span class="achievement-date">Jan 7, 2025</span>
+                    <h4>Marian Golden Band Award</h4>
+                    <p>For scoring 9.62 SCPA in Third Semester of UG Program in BCA</p>
+                </div>
+
+                <div class="achievement-item">
+                    <span class="achievement-date">Oct 25, 2024</span>
+                    <h4>Marian Silver Band Award</h4>
+                    <p>For scoring 9.05 SCPA in First Semester and 9.24 SCPA in Second Semester of UG Program in BCA</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1641,7 +1847,8 @@ body {
     <div class="container">
         <h2 class="section-title">Certifications</h2>
         <div class="certifications-grid">
-            <!-- First 3 certificates (visible by default) -->
+            <!-- Certificates Grid -->
+              <!-- NCDEA PAPER Certificate -->
             <div class="certification-card" data-aos="fade-up">
                 <div class="certification-img">
                     <img src="nceda.jpg" alt="Conference Presentation Certificate" class="lazy" loading="lazy">
@@ -1654,6 +1861,7 @@ body {
                 </div>
             </div>
 
+             <!-- PYTHON Certificate -->
             <div class="certification-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="certification-img">
                     <img src="python.jpg" alt="Python for Data Science Certificate" class="lazy" loading="lazy">
@@ -1666,6 +1874,45 @@ body {
                 </div>
             </div>
 
+            <!-- NASA Space Apps Certificate -->
+<div class="certification-card" data-aos="fade-up" data-aos-delay="200">
+    <div class="certification-img">
+        <img src="NASA_ajce.jpg" alt="NASA Galactic Problem Solver Certificate" class="lazy" loading="lazy">
+    </div>
+    <div class="certification-info">
+        <h3>NASA International Space Apps Challenge – Galactic Problem Solver</h3>
+        <p>NASA | Oct 2025</p>
+        <p>Recognized for outstanding participation and problem-solving in the 2025 NASA International Space Apps Challenge, addressing global and interplanetary challenges through innovative solutions.</p>
+        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_im-pleased-to-share-my-certificate-of-recognition-activity-7380958352429953024-DHQ5?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>
+
+            <!-- Databricks Certificate -->
+<div class="certification-card" data-aos="fade-up" data-aos-delay="100">
+    <div class="certification-img">
+        <img src="databricks_genai.jpg" alt="Databricks Generative AI Fundamentals" class="lazy" loading="lazy">
+    </div>
+    <div class="certification-info">
+        <h3>Databricks Accredited Generative AI Fundamentals</h3>
+        <p>Databricks Academy | Issued: Oct 2025</p>
+        <p>Successfully completed the Databricks Generative AI Fundamentals accreditation, gaining foundational understanding of Large Language Models (LLMs), prompt engineering, and Databricks Lakehouse AI ecosystem.</p>
+        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_pleased-to-share-that-i-have-successfully-activity-7380957711552856064-nxpJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>
+
+ <!-- Wordpress Certificate -->
+<div class="certification-card " data-aos="fade-up" data-aos-delay="200">
+    <div class="certification-img">
+        <img src="wordpress.jpg" alt="Introduction to WordPress Certificate" class="lazy" loading="lazy">
+    </div>
+    <div class="certification-info">
+        <h3>Introduction to WordPress</h3>
+        <p>Simplilearn SkillUp | Completed: 26th July 2025</p>
+        <p>Explored WordPress fundamentals including theme setup, plugin integration, and basic customization for building dynamic websites.</p>
+        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_upskilling-update-ive-just-completed-activity-7357098299834748928-MhDH?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>
+
             <!-- RPA UiPath Certificate -->
 <div class="certification-card" data-aos="fade-up" data-aos-delay="200">
     <div class="certification-img">
@@ -1675,35 +1922,26 @@ body {
         <h3>Introduction to RPA UiPath</h3>
         <p>Simplilearn SkillUp | Completed: Aug 2025</p>
         <p>Completed the Introduction to RPA UiPath course, demonstrating skills in Robotic Process Automation concepts, UiPath fundamentals, and process automation techniques.</p>
-        <a href="#" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+        <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_happy-to-share-that-i-have-completed-the-activity-7363422769054666752-dwwS?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
     </div>
 </div>
-            <!-- CRM Certificate -->
-<div class="certification-card" data-aos="fade-up" data-aos-delay="100">
-    <div class="certification-img">
-        <img src="crm.jpg" alt="Customer Relationship Management Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Customer Relationship Management Course</h3>
-        <p>Simplilearn SkillUp | Completed: Aug 2025</p>
-        <p>Successfully completed an online course on Customer Relationship Management, gaining knowledge in managing customer interactions, strategies, and tools to enhance relationships and business growth.</p>
-        <a href="#" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
-           <div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="200">
-    <div class="certification-img">
-        <img src="wordpress.jpg" alt="Introduction to WordPress Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Introduction to WordPress</h3>
-        <p>Simplilearn SkillUp | Completed: 26th July 2025</p>
-        <p>Explored WordPress fundamentals including theme setup, plugin integration, and basic customization for building dynamic websites.</p>
-        <a href="wordpress.jpg" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
+            <!-- Hidden Certificates -->
 
-           <!-- Additional certificates (hidden by default) -->
-             <div class="certification-card" data-aos="fade-up" data-aos-delay="200">
+             <!-- CRM Certificate -->
+            <div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="100">
+                <div class="certification-img">
+                    <img src="crm.jpg" alt="Customer Relationship Management Certificate" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Customer Relationship Management Course</h3>
+                    <p>Simplilearn SkillUp | Completed: Aug 2025</p>
+                    <p>Successfully completed an online course on Customer Relationship Management, gaining knowledge in managing customer interactions, strategies, and tools to enhance relationships and business growth.</p>
+                    <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_happy-to-share-that-i-have-completed-the-activity-7363422453261352960-v0OF?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+             <!-- UI/UX Certificate -->
+            <div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="150">
                 <div class="certification-img">
                     <img src="uiux.jpg" alt="UI/UX Design Certificate" class="lazy" loading="lazy">
                 </div>
@@ -1715,33 +1953,33 @@ body {
                 </div>
             </div>
             
-<div class="certification-card hidden-certificate" data-aos="fade-up">
-    <div class="certification-img">
-        <img src="git.jpg" alt="Git Training Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>Git Training</h3>
-        <p>Simplilearn SkillUp | Completed: 15th May 2025</p>
-        <p>Gained hands-on knowledge of Git fundamentals, version control workflows, branching, merging, and collaboration best practices for software projects.</p>
-        <a href="git.jpg" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
+             <!-- GIT Certificate -->
+            <div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="200">
+                <div class="certification-img">
+                    <img src="git.jpg" alt="Git Training Certificate" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>Git Training</h3>
+                    <p>Simplilearn SkillUp | Completed: 15th May 2025</p>
+                    <p>Gained hands-on knowledge of Git fundamentals, version control workflows, branching, merging, and collaboration best practices for software projects.</p>
+                    <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_completed-git-training-im-pleased-to-activity-7339650172299169792-VqEW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-<div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="100">
-    <div class="certification-img">
-        <img src="uiuxbeginners.jpg" alt="UI/UX for Beginners Certificate" class="lazy" loading="lazy">
-    </div>
-    <div class="certification-info">
-        <h3>UI/UX for Beginners</h3>
-        <p>Simplilearn SkillUp | Completed: 19th May 2025</p>
-        <p>Learned key UI/UX principles including user-centered design, wireframing, and usability testing to enhance digital experiences.</p>
-        <a href="uiuxbeginners.jpg" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
-    </div>
-</div>
-
-
-        
-        <div class="view-more-container" style="text-align: center; margin-top: 30px;">
+                 <!-- UI/UX Certificate -->
+            <div class="certification-card hidden-certificate" data-aos="fade-up" data-aos-delay="250">
+                <div class="certification-img">
+                    <img src="uiuxbeginners.jpg" alt="UI/UX for Beginners Certificate" class="lazy" loading="lazy">
+                </div>
+                <div class="certification-info">
+                    <h3>UI/UX for Beginners</h3>
+                    <p>Simplilearn SkillUp | Completed: 19th May 2025</p>
+                    <p>Learned key UI/UX principles including user-centered design, wireframing, and usability testing to enhance digital experiences.</p>
+                    <a href="https://www.linkedin.com/posts/mekhna-alphons-joby_stepping-into-uiux-design-im-glad-activity-7339650612214579200-TPaZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE_ix5sBOHP11ceolAiHvyFsbFhXyNnpPAs" target="_blank" class="certification-link">View Certificate <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+    
+        <div class="view-more-container">
             <button id="view-more-btn" class="btn">View More Certificates</button>
         </div>
     </div>
@@ -1795,12 +2033,9 @@ body {
         <a href="https://mekhna3.wordpress.com/2025/07/26/mini-projects-big-impact-what-ive-learned-and-what-you-can-too/" 
            target="_blank" class="blog-link">Read Article <i class="fas fa-arrow-right"></i></a>
     </div>
-</div>
-
-
-            </div>
-           
-        </div>
+    </div>
+    </div>
+    </div>
     </section>
 
     <!-- Interests Section -->
@@ -2189,22 +2424,30 @@ particlesJS('particles-js', {
                 }
             });
         });
+
         // View More Certificates
 const viewMoreBtn = document.getElementById('view-more-btn');
 const hiddenCertificates = document.querySelectorAll('.hidden-certificate');
 let showingAll = false;
 
-viewMoreBtn.addEventListener('click', () => {
-    hiddenCertificates.forEach(cert => {
-        cert.classList.toggle('hidden-certificate');
+if (viewMoreBtn) {
+    viewMoreBtn.addEventListener('click', function() {
+        hiddenCertificates.forEach(cert => {
+            cert.classList.toggle('visible');
+        });
+        
+        showingAll = !showingAll;
+        viewMoreBtn.textContent = showingAll ? 'Show Less' : 'View More Certificates';
+        
+        // Smooth scroll to the button after toggling
+        if (showingAll) {
+            setTimeout(() => {
+                viewMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
     });
-    
-    showingAll = !showingAll;
-    viewMoreBtn.textContent = showingAll ? 'View Less' : 'View More Certificates';
-    
-    // Reinitialize AOS for newly visible elements
-    AOS.refresh();
-});
+}
+
         // Contact Form Submission
 const contactForm = document.getElementById('contact-form');
 const formMessage = document.getElementById('form-message');
