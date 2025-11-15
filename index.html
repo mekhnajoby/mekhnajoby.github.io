@@ -2038,64 +2038,71 @@ body {
     </div>
     </section>
 
-    <!-- Interests Section -->
-    <!--
-Add the following "Interests" section to your index.html where you want it to appear
-(e.g. after #projects or before #education). This snippet includes:
- - A responsive photo gallery (click thumbnails to open a lightbox modal)
- - A "Places I Visited" list that highlights photos by place
- - A small interactive map using Leaflet (no API key required)
- - CSS & JS needed for the gallery/lightbox and map
-
-Notes:
- - Place your images under /assets/photos/ (example filenames used below).
- - If you prefer Google Maps instead of Leaflet, I can give that version (requires API key).
- - If you want me to open a PR to add these changes and media files, tell me and I will prepare the commit.
--->
-<section id="interests">
+<!-- Interests section (REPLACE existing duplicate / messy interests sections with this block) -->
+<section id="interests" class="interests-section" data-aos="fade-up">
   <div class="container">
-    <h2 class="section-title" data-aos="fade-up">Interests</h2>
+    <h2 class="section-title">Interests</h2>
 
-    <div class="interests-grid" data-aos="fade-up">
-      <!-- Photo gallery -->
+    <div class="interests-grid">
+      <!-- Left: Photography card with action buttons -->
       <div class="interests-gallery">
-        <h3 style="margin-bottom:16px;">My Photographs</h3>
-        <p style="color:var(--gray); margin-bottom:20px;">
-          Photos I captured while travelling — click a photo to view details and the place.
-        </p>
+        <div class="interest-card" data-aos="fade-up">
+          <div class="interest-icon"><i class="fas fa-camera"></i></div>
+          <h3>Photography</h3>
+          <p class="muted">Capturing moments and telling stories through my lens — nature and urban landscapes.</p>
 
-        <div class="gallery-grid">
-          <!-- Example photo items: replace src and data-full with your files -->
-          <button class="gallery-item" data-full="/assets/photos/kerala-backwaters.jpg" data-caption="Sunset on the backwaters" data-place="Kerala, India">
-            <img loading="lazy" src="/assets/photos/kerala-backwaters-thumb.jpg" alt="Kerala backwaters">
-            <span class="sr-only">View photo: Sunset on the backwaters</span>
-          </button>
+          <!-- Action buttons -->
+          <div class="interest-actions" style="margin:18px 0; display:flex; gap:12px;">
+            <button id="btn-view-shots" class="btn btn-outline" aria-pressed="false">View shots</button>
+            <button id="btn-view-places" class="btn" aria-pressed="false">View places visited</button>
+          </div>
 
-          <button class="gallery-item" data-full="/assets/photos/munnar-hills.jpg" data-caption="Munnar tea hills" data-place="Munnar, India">
-            <img loading="lazy" src="/assets/photos/munnar-hills-thumb.jpg" alt="Munnar hills">
-          </button>
+          <!-- Gallery view (hidden by default) -->
+          <div id="gallery-view" class="gallery-view" aria-hidden="true">
+            <p style="color:var(--gray); margin-bottom:12px;">Photos I captured while travelling — click a photo to open.</p>
+            <div class="gallery-grid">
+              <!-- Replace src/data-full with your real assets under /assets/photos/ -->
+              <button class="gallery-item" data-full="/assets/photos/kerala-backwaters.jpg" data-caption="Sunset on the backwaters" data-place="Kerala, India" aria-label="Sunset on the backwaters">
+                <img loading="lazy" src="/assets/photos/kerala-backwaters-thumb.jpg" alt="Kerala backwaters">
+              </button>
 
-          <button class="gallery-item" data-full="/assets/photos/pondicherry-street.jpg" data-caption="Colorful lane in Pondicherry" data-place="Pondicherry, India">
-            <img loading="lazy" src="/assets/photos/pondicherry-street-thumb.jpg" alt="Pondicherry street">
-          </button>
+              <button class="gallery-item" data-full="/assets/photos/munnar-hills.jpg" data-caption="Munnar tea hills" data-place="Munnar, India" aria-label="Munnar tea hills">
+                <img loading="lazy" src="/assets/photos/munnar-hills-thumb.jpg" alt="Munnar hills">
+              </button>
 
-          <button class="gallery-item" data-full="/assets/photos/hiking-trail.jpg" data-caption="Hike to the viewpoint" data-place="Western Ghats, India">
-            <img loading="lazy" src="/assets/photos/hiking-trail-thumb.jpg" alt="Hiking trail">
-          </button>
+              <button class="gallery-item" data-full="/assets/photos/pondicherry-street.jpg" data-caption="Colorful lane in Pondicherry" data-place="Pondicherry, India" aria-label="Pondicherry street">
+                <img loading="lazy" src="/assets/photos/pondicherry-street-thumb.jpg" alt="Pondicherry street">
+              </button>
 
-          <!-- Add more gallery-item blocks for each photo you want to include -->
+              <button class="gallery-item" data-full="/assets/photos/hiking-trail.jpg" data-caption="Hike to the viewpoint" data-place="Western Ghats, India" aria-label="Hike to the viewpoint">
+                <img loading="lazy" src="/assets/photos/hiking-trail-thumb.jpg" alt="Hiking trail">
+              </button>
+              <!-- add more gallery items as needed -->
+            </div>
+          </div>
+
+          <!-- Globe / Places view (hidden by default) -->
+          <div id="globe-view" class="globe-view" aria-hidden="true">
+            <p style="color:var(--gray); margin-bottom:12px;">Explore where I've been — click pins to see details.</p>
+            <div id="globeViz" style="width:100%; height:420px; border-radius:12px; overflow:hidden; box-shadow: var(--shadow);"></div>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <!-- quick-place buttons that focus the globe (data attributes must match markers below) -->
+              <button class="place-focus btn-outline quick-place" data-place="Kerala, India">Kerala</button>
+              <button class="place-focus btn-outline quick-place" data-place="Munnar, India">Munnar</button>
+              <button class="place-focus btn-outline quick-place" data-place="Pondicherry, India">Pondicherry</button>
+              <button class="place-focus btn-outline quick-place" data-place="Western Ghats, India">Western Ghats</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Places visited + Map -->
-      <aside class="interests-places">
-        <h3 style="margin-bottom:16px;">Places I Visited</h3>
-        <p style="color:var(--gray); margin-bottom:12px;">
-          Click a place to filter photos from that location.
-        </p>
+      <!-- Right: Places list (desktop sidebar) -->
+      <aside class="interests-places" aria-label="Places I visited">
+        <h3 style="margin-bottom:12px;">Places I Visited</h3>
+        <p style="color:var(--gray); margin-bottom:12px;">Click a place below to filter photos or focus the globe.</p>
 
         <ul class="places-list">
-          <!-- data-place must match data-place on the gallery items (exact match) -->
+          <!-- Buttons match gallery-item data-place values and globe markers -->
           <li><button class="place-btn" data-place="Kerala, India">Kerala, India</button></li>
           <li><button class="place-btn" data-place="Munnar, India">Munnar, India</button></li>
           <li><button class="place-btn" data-place="Pondicherry, India">Pondicherry, India</button></li>
@@ -2103,7 +2110,8 @@ Notes:
           <li><button class="place-btn" data-place="all">Show all photos</button></li>
         </ul>
 
-        <div id="places-map" style="height:300px; border-radius:12px; overflow:hidden; margin-top:18px;"></div>
+        <!-- Small fallback map thumbnail (optional) -->
+        <div id="places-map-thumb" style="height:200px; border-radius:12px; overflow:hidden; margin-top:16px; display:none;"></div>
       </aside>
     </div>
   </div>
@@ -2120,153 +2128,107 @@ Notes:
     </div>
   </div>
 
-  <!-- CSS for gallery, modal and places (add to your main <style> or external CSS) -->
+  <!-- Styles specific to interests (you can move into your main stylesheet) -->
   <style>
-    /* Interests: grid */
+    /* grid behavior for the section */
     .interests-grid {
       display: grid;
       grid-template-columns: 1fr 360px;
-      gap: 40px;
+      gap: 36px;
       align-items: start;
     }
-    @media (max-width: 1000px) {
+    @media (max-width:1000px) {
       .interests-grid { grid-template-columns: 1fr; }
-      .interests-places { order: 2; margin-top: 30px; }
+      .interests-places { order: 2; margin-top: 20px; }
     }
 
-    /* Gallery grid */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 16px;
-    }
-    .gallery-item {
-      background: var(--white);
-      border-radius: 10px;
-      overflow: hidden;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      transition: transform .25s ease, box-shadow .25s ease;
-      text-align: left;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      display: block;
-      transition: transform .35s ease;
-    }
-    .gallery-item:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-    }
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
+    .interest-card { padding:22px; border-radius:12px; background:var(--white); box-shadow:var(--shadow); }
+    .interest-icon { font-size:28px; color:var(--primary); margin-bottom:10px; }
 
-    /* Modal */
-    .photo-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      background: rgba(10,10,10,0.65);
-      z-index: 20000;
-      padding: 24px;
-    }
-    .photo-modal.open { display: flex; }
-    .modal-content {
-      max-width: 1100px;
-      width: 100%;
-      background: transparent;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      text-align: left;
-    }
-    .modal-content img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-      max-height: 75vh;
-      object-fit: contain;
-      background: #111;
-    }
-    .modal-meta {
-      margin-top: 12px;
-      color: var(--light);
-      text-align: left;
-    }
-    .modal-caption {
-      font-weight: 600;
-      font-size: 1.05rem;
-      color: white;
-    }
-    .modal-place {
-      color: var(--primary);
-      margin-top: 6px;
-      font-weight: 500;
-    }
-    .modal-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      color: white;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 1.6rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 2;
-    }
+    .muted { color:var(--gray); }
 
-    /* Places list */
-    .places-list { list-style: none; padding: 0; margin: 0; display:flex; flex-direction:column; gap:8px; }
-    .place-btn {
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.06);
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: left;
-      font-weight: 600;
-      color: var(--dark);
-      transition: var(--transition);
-    }
-    .place-btn:hover {
-      transform: translateX(6px);
-      background: var(--gradient-main);
-      color: white;
-      border-color: transparent;
-    }
+    /* gallery */
+    .gallery-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap:12px; margin-top:8px; }
+    .gallery-item { background:var(--white); border-radius:10px; overflow:hidden; border:none; padding:0; cursor:pointer; box-shadow:var(--shadow); transition: transform .25s, box-shadow .25s; }
+    .gallery-item img { width:100%; height:110px; object-fit:cover; display:block; transition: transform .35s; }
+    .gallery-item:hover { transform: translateY(-6px); box-shadow:var(--shadow-lg); }
+    .gallery-item:hover img { transform:scale(1.05); }
+
+    /* modal */
+    .photo-modal { position:fixed; inset:0; display:none; justify-content:center; align-items:center; background:rgba(10,10,10,0.65); z-index:20000; padding:24px; }
+    .photo-modal.open { display:flex; }
+    .modal-content { max-width:1100px; width:100%; background:transparent; border-radius:8px; overflow:hidden; position:relative; text-align:left; }
+    .modal-content img { width:100%; height:auto; border-radius:8px; display:block; max-height:75vh; object-fit:contain; background:#111; }
+    .modal-meta { margin-top:12px; color:var(--light); text-align:left; }
+    .modal-caption { font-weight:600; font-size:1.05rem; color:white; }
+    .modal-place { color:var(--primary); margin-top:6px; font-weight:500; }
+    .modal-close { position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.6); border:none; color:white; width:44px; height:44px; border-radius:50%; font-size:1.6rem; display:flex; justify-content:center; align-items:center; cursor:pointer; z-index:2; }
+
+    /* quick place buttons */
+    .quick-place { padding:8px 12px; font-weight:600; border-radius:8px; }
+
+    /* hide views by default and show when active */
+    #gallery-view, #globe-view { display:none; }
+    #gallery-view.active, #globe-view.active { display:block; }
+
+    /* globe container small tweaks */
+    #globeViz canvas { border-radius:12px !important; }
   </style>
 
-  <!-- Dependencies: Leaflet (for map). Add these in <head> or before closing </body> if not already present -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-sA+4w7VtWmKJ3tM9wNQ1f0sP4/0a2W7BqkLv+U8k3mM=" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-Nu9oYq6kC6xQ6vKfLKs14o3HsXQ0ZonDqf1z7hXgE38=" crossorigin=""></script>
+  <!-- Globe (3D) dependency: globe.gl (uses three.js) - no API keys required -->
+  <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
+  <script src="https://unpkg.com/globe.gl@2.24.2"></script>
 
-  <!-- JS: gallery, filtering and map initialization -->
+  <!-- JS: gallery, filtering, view toggles and globe initialization -->
   <script>
-    (function(){
-      // Modal / Gallery logic
-      const modal = document.getElementById('photo-modal');
-      const modalImg = document.getElementById('modal-image');
-      const modalCaption = document.getElementById('modal-caption');
-      const modalPlace = document.getElementById('modal-place');
-      const closeBtn = document.getElementById('modal-close');
-      const galleryItems = document.querySelectorAll('.gallery-item');
+  (function () {
+    // Elements
+    const btnShots = document.getElementById('btn-view-shots');
+    const btnPlaces = document.getElementById('btn-view-places');
+    const galleryView = document.getElementById('gallery-view');
+    const globeView = document.getElementById('globe-view');
+    const placeBtns = document.querySelectorAll('.place-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
 
+    // Modal
+    const modal = document.getElementById('photo-modal');
+    const modalImg = document.getElementById('modal-image');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalPlace = document.getElementById('modal-place');
+    const closeBtn = document.getElementById('modal-close');
+
+    // Initialize default: show gallery view when opening Photography
+    function showGallery() {
+      galleryView.classList.add('active');
+      galleryView.setAttribute('aria-hidden', 'false');
+      globeView.classList.remove('active');
+      globeView.setAttribute('aria-hidden', 'true');
+      btnShots.setAttribute('aria-pressed', 'true');
+      btnPlaces.setAttribute('aria-pressed', 'false');
+      // Lazy-init gallery items (listeners)
+      initGalleryListeners();
+    }
+    function showGlobe() {
+      galleryView.classList.remove('active');
+      galleryView.setAttribute('aria-hidden', 'true');
+      globeView.classList.add('active');
+      globeView.setAttribute('aria-hidden', 'false');
+      btnShots.setAttribute('aria-pressed', 'false');
+      btnPlaces.setAttribute('aria-pressed', 'true');
+      // init globe only once
+      if (!window.__globeInitialized) {
+        initGlobe();
+        window.__globeInitialized = true;
+      }
+    }
+
+    btnShots.addEventListener('click', showGallery);
+    btnPlaces.addEventListener('click', showGlobe);
+
+    // Gallery modal logic
+    function initGalleryListeners() {
+      if (initGalleryListeners._done) return;
+      initGalleryListeners._done = true;
       galleryItems.forEach(btn => {
         btn.addEventListener('click', () => {
           const full = btn.dataset.full;
@@ -2278,6 +2240,7 @@ Notes:
           modalPlace.textContent = place;
           modal.classList.add('open');
           modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
         });
       });
 
@@ -2285,76 +2248,121 @@ Notes:
         modal.classList.remove('open');
         modal.setAttribute('aria-hidden', 'true');
         modalImg.src = '';
+        document.body.style.overflow = '';
       });
 
-      // close on background click
       modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          closeBtn.click();
-        }
+        if (e.target === modal) closeBtn.click();
       });
 
-      // Keyboard close
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) {
-          closeBtn.click();
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeBtn.click();
+      });
+    }
+
+    // Places filter logic - when clicking place in sidebar -> filter gallery and focus globe if present
+    placeBtns.forEach(pbtn => {
+      pbtn.addEventListener('click', () => {
+        const place = pbtn.dataset.place;
+        // Filter gallery
+        if (place === 'all') {
+          document.querySelectorAll('.gallery-item').forEach(it => it.style.display = '');
+          // show gallery if user wants to see photos
+          showGallery();
+        } else {
+          document.querySelectorAll('.gallery-item').forEach(it => {
+            it.style.display = (it.dataset.place === place) ? '' : 'none';
+          });
+          // switch to gallery view so user can view filtered photos
+          showGallery();
+          const first = document.querySelector(`.gallery-item[data-place="${place}"]`);
+          if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+        // If globe is active, focus the marker (try to focus)
+        if (window.myGlobe && place !== 'all') {
+          const target = window.__markersData.find(m => m.label === place);
+          if (target) {
+            // fly to the marker on globe (approx)
+            const {lat, lng} = target;
+            window.myGlobe.pointOfView({ lat: lat, lng: lng, altitude: 1.8 }, 1500);
+            // briefly highlight point (optional)
+          }
         }
       });
+    });
 
-      // Places filter logic
-      const placeBtns = document.querySelectorAll('.place-btn');
-      placeBtns.forEach(pbtn => {
-        pbtn.addEventListener('click', () => {
-          const place = pbtn.dataset.place;
-          if (place === 'all') {
-            document.querySelectorAll('.gallery-item').forEach(it => it.style.display = '');
+    // Quick-place focus buttons in the left card
+    document.querySelectorAll('.quick-place').forEach(b => {
+      b.addEventListener('click', () => {
+        const place = b.dataset.place;
+        if (window.myGlobe && place) {
+          const target = window.__markersData.find(m => m.label === place);
+          if (target) window.myGlobe.pointOfView({ lat: target.lat, lng: target.lng, altitude: 1.8 }, 1200);
+        } else {
+          // fallback: filter gallery
+          document.querySelectorAll('.gallery-item').forEach(it => {
+            it.style.display = (it.dataset.place === place) ? '' : 'none';
+          });
+          showGallery();
+        }
+      });
+    });
+
+    /* ---------------------------
+       Globe (3D) initialization
+       Uses globe.gl (no API key). Markers array below:
+       Replace coords, label and thumbnail with your own locations/images as needed.
+       --------------------------- */
+    function initGlobe() {
+      // Minimal markers data: lat, lng, label, img (optional)
+      const markers = [
+        { lat: 9.9312, lng: 76.2673, label: 'Kerala, India', img: '/assets/photos/kerala-backwaters-thumb.jpg' },
+        { lat: 10.0889, lng: 77.0595, label: 'Munnar, India', img: '/assets/photos/munnar-hills-thumb.jpg' },
+        { lat: 11.9416, lng: 79.8083, label: 'Pondicherry, India', img: '/assets/photos/pondicherry-street-thumb.jpg' },
+        { lat: 10.1234, lng: 76.5678, label: 'Western Ghats, India', img: '/assets/photos/hiking-trail-thumb.jpg' }
+      ];
+      // expose for other handlers
+      window.__markersData = markers;
+
+      // create globe
+      const globeEl = document.getElementById('globeViz');
+      // Configure globe: globe.gl recommended factory usage
+      window.myGlobe = Globe()(globeEl)
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg') // nice dark earth texture
+        .backgroundColor('rgba(0,0,0,0)')
+        .pointsData(markers)
+        .pointLat(d => d.lat)
+        .pointLng(d => d.lng)
+        .pointColor(() => '#ff5c7c')
+        .pointRadius(0.6)
+        .pointAltitude(0.02)
+        .pointsMerge(true)
+        .onPointClick((d) => {
+          // On click open modal with place info or scroll gallery to show matching photos
+          if (d.img) {
+            // show a small lightbox (reuse modal)
+            modalImg.src = d.img.replace('-thumb','') || d.img; // try show full if available
+            modalImg.alt = d.label;
+            modalCaption.textContent = d.label;
+            modalPlace.textContent = d.label;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
           } else {
-            document.querySelectorAll('.gallery-item').forEach(it => {
-              it.style.display = (it.dataset.place === place) ? '' : 'none';
-            });
-            // Optionally open first matching photo
-            const first = document.querySelector(`.gallery-item[data-place="${place}"]`);
-            if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+            alert(d.label);
           }
         });
-      });
 
-      // Initialize Leaflet map with sample markers (adjust coordinates to the places you visited)
-      function initMap() {
-        try {
-          const map = L.map('places-map', { zoomControl: false }).setView([10.8505, 76.2711], 6); // Center on southern India
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; OpenStreetMap contributors'
-          }).addTo(map);
+      // fit view to markers
+      const lats = markers.map(m => m.lat), lngs = markers.map(m => m.lng);
+      const meanLat = lats.reduce((a,b)=>a+b,0)/lats.length;
+      const meanLng = lngs.reduce((a,b)=>a+b,0)/lngs.length;
+      window.myGlobe.pointOfView({ lat: meanLat, lng: meanLng, altitude: 2.2 }, 800);
+    }
 
-          // Sample markers - replace coords & popup text with your places
-          const markers = [
-            { coords: [9.9312, 76.2673], label: 'Kerala (example)' },
-            { coords: [10.0889, 77.0595], label: 'Munnar (example)' },
-            { coords: [11.9416, 79.8083], label: 'Pondicherry (example)' },
-            { coords: [10.1234, 76.5678], label: 'Western Ghats (example)' }
-          ];
-
-          markers.forEach(m => {
-            L.marker(m.coords).addTo(map).bindPopup(m.label);
-          });
-
-          // Fit map bounds to markers
-          const group = new L.featureGroup(markers.map(m => L.marker(m.coords)));
-          map.fitBounds(group.getBounds(), { padding: [40,40] });
-        } catch (err) {
-          console.warn('Leaflet failed to initialize', err);
-          document.getElementById('places-map').style.display = 'none';
-        }
-      }
-
-      // Wait a bit so the map container is visible then init
-      window.addEventListener('load', () => {
-        // Slight delay avoids "map container not sized" issues
-        setTimeout(initMap, 300);
-      });
-    })();
+    // Start with gallery visible
+    showGallery();
+  })();
   </script>
 </section>
     
