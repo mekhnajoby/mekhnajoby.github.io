@@ -2039,6 +2039,325 @@ body {
     </section>
 
     <!-- Interests Section -->
+    <!--
+Add the following "Interests" section to your index.html where you want it to appear
+(e.g. after #projects or before #education). This snippet includes:
+ - A responsive photo gallery (click thumbnails to open a lightbox modal)
+ - A "Places I Visited" list that highlights photos by place
+ - A small interactive map using Leaflet (no API key required)
+ - CSS & JS needed for the gallery/lightbox and map
+
+Notes:
+ - Place your images under /assets/photos/ (example filenames used below).
+ - If you prefer Google Maps instead of Leaflet, I can give that version (requires API key).
+ - If you want me to open a PR to add these changes and media files, tell me and I will prepare the commit.
+-->
+<section id="interests">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Interests</h2>
+
+    <div class="interests-grid" data-aos="fade-up">
+      <!-- Photo gallery -->
+      <div class="interests-gallery">
+        <h3 style="margin-bottom:16px;">My Photographs</h3>
+        <p style="color:var(--gray); margin-bottom:20px;">
+          Photos I captured while travelling — click a photo to view details and the place.
+        </p>
+
+        <div class="gallery-grid">
+          <!-- Example photo items: replace src and data-full with your files -->
+          <button class="gallery-item" data-full="/assets/photos/kerala-backwaters.jpg" data-caption="Sunset on the backwaters" data-place="Kerala, India">
+            <img loading="lazy" src="/assets/photos/kerala-backwaters-thumb.jpg" alt="Kerala backwaters">
+            <span class="sr-only">View photo: Sunset on the backwaters</span>
+          </button>
+
+          <button class="gallery-item" data-full="/assets/photos/munnar-hills.jpg" data-caption="Munnar tea hills" data-place="Munnar, India">
+            <img loading="lazy" src="/assets/photos/munnar-hills-thumb.jpg" alt="Munnar hills">
+          </button>
+
+          <button class="gallery-item" data-full="/assets/photos/pondicherry-street.jpg" data-caption="Colorful lane in Pondicherry" data-place="Pondicherry, India">
+            <img loading="lazy" src="/assets/photos/pondicherry-street-thumb.jpg" alt="Pondicherry street">
+          </button>
+
+          <button class="gallery-item" data-full="/assets/photos/hiking-trail.jpg" data-caption="Hike to the viewpoint" data-place="Western Ghats, India">
+            <img loading="lazy" src="/assets/photos/hiking-trail-thumb.jpg" alt="Hiking trail">
+          </button>
+
+          <!-- Add more gallery-item blocks for each photo you want to include -->
+        </div>
+      </div>
+
+      <!-- Places visited + Map -->
+      <aside class="interests-places">
+        <h3 style="margin-bottom:16px;">Places I Visited</h3>
+        <p style="color:var(--gray); margin-bottom:12px;">
+          Click a place to filter photos from that location.
+        </p>
+
+        <ul class="places-list">
+          <!-- data-place must match data-place on the gallery items (exact match) -->
+          <li><button class="place-btn" data-place="Kerala, India">Kerala, India</button></li>
+          <li><button class="place-btn" data-place="Munnar, India">Munnar, India</button></li>
+          <li><button class="place-btn" data-place="Pondicherry, India">Pondicherry, India</button></li>
+          <li><button class="place-btn" data-place="Western Ghats, India">Western Ghats, India</button></li>
+          <li><button class="place-btn" data-place="all">Show all photos</button></li>
+        </ul>
+
+        <div id="places-map" style="height:300px; border-radius:12px; overflow:hidden; margin-top:18px;"></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Lightbox modal (hidden by default) -->
+  <div id="photo-modal" class="photo-modal" aria-hidden="true" role="dialog" aria-label="Photo viewer">
+    <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+    <div class="modal-content">
+      <img id="modal-image" src="" alt="">
+      <div class="modal-meta">
+        <div id="modal-caption" class="modal-caption"></div>
+        <div id="modal-place" class="modal-place"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSS for gallery, modal and places (add to your main <style> or external CSS) -->
+  <style>
+    /* Interests: grid */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 1000px) {
+      .interests-grid { grid-template-columns: 1fr; }
+      .interests-places { order: 2; margin-top: 30px; }
+    }
+
+    /* Gallery grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    .gallery-item {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, box-shadow .25s ease;
+      text-align: left;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s ease;
+    }
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Modal */
+    .photo-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(10,10,10,0.65);
+      z-index: 20000;
+      padding: 24px;
+    }
+    .photo-modal.open { display: flex; }
+    .modal-content {
+      max-width: 1100px;
+      width: 100%;
+      background: transparent;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      text-align: left;
+    }
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      max-height: 75vh;
+      object-fit: contain;
+      background: #111;
+    }
+    .modal-meta {
+      margin-top: 12px;
+      color: var(--light);
+      text-align: left;
+    }
+    .modal-caption {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: white;
+    }
+    .modal-place {
+      color: var(--primary);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    /* Places list */
+    .places-list { list-style: none; padding: 0; margin: 0; display:flex; flex-direction:column; gap:8px; }
+    .place-btn {
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark);
+      transition: var(--transition);
+    }
+    .place-btn:hover {
+      transform: translateX(6px);
+      background: var(--gradient-main);
+      color: white;
+      border-color: transparent;
+    }
+  </style>
+
+  <!-- Dependencies: Leaflet (for map). Add these in <head> or before closing </body> if not already present -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+4w7VtWmKJ3tM9wNQ1f0sP4/0a2W7BqkLv+U8k3mM=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-Nu9oYq6kC6xQ6vKfLKs14o3HsXQ0ZonDqf1z7hXgE38=" crossorigin=""></script>
+
+  <!-- JS: gallery, filtering and map initialization -->
+  <script>
+    (function(){
+      // Modal / Gallery logic
+      const modal = document.getElementById('photo-modal');
+      const modalImg = document.getElementById('modal-image');
+      const modalCaption = document.getElementById('modal-caption');
+      const modalPlace = document.getElementById('modal-place');
+      const closeBtn = document.getElementById('modal-close');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+
+      galleryItems.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const full = btn.dataset.full;
+          const caption = btn.dataset.caption || '';
+          const place = btn.dataset.place || '';
+          modalImg.src = full;
+          modalImg.alt = caption;
+          modalCaption.textContent = caption;
+          modalPlace.textContent = place;
+          modal.classList.add('open');
+          modal.setAttribute('aria-hidden', 'false');
+        });
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        modalImg.src = '';
+      });
+
+      // close on background click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeBtn.click();
+        }
+      });
+
+      // Keyboard close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closeBtn.click();
+        }
+      });
+
+      // Places filter logic
+      const placeBtns = document.querySelectorAll('.place-btn');
+      placeBtns.forEach(pbtn => {
+        pbtn.addEventListener('click', () => {
+          const place = pbtn.dataset.place;
+          if (place === 'all') {
+            document.querySelectorAll('.gallery-item').forEach(it => it.style.display = '');
+          } else {
+            document.querySelectorAll('.gallery-item').forEach(it => {
+              it.style.display = (it.dataset.place === place) ? '' : 'none';
+            });
+            // Optionally open first matching photo
+            const first = document.querySelector(`.gallery-item[data-place="${place}"]`);
+            if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+          }
+        });
+      });
+
+      // Initialize Leaflet map with sample markers (adjust coordinates to the places you visited)
+      function initMap() {
+        try {
+          const map = L.map('places-map', { zoomControl: false }).setView([10.8505, 76.2711], 6); // Center on southern India
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+
+          // Sample markers - replace coords & popup text with your places
+          const markers = [
+            { coords: [9.9312, 76.2673], label: 'Kerala (example)' },
+            { coords: [10.0889, 77.0595], label: 'Munnar (example)' },
+            { coords: [11.9416, 79.8083], label: 'Pondicherry (example)' },
+            { coords: [10.1234, 76.5678], label: 'Western Ghats (example)' }
+          ];
+
+          markers.forEach(m => {
+            L.marker(m.coords).addTo(map).bindPopup(m.label);
+          });
+
+          // Fit map bounds to markers
+          const group = new L.featureGroup(markers.map(m => L.marker(m.coords)));
+          map.fitBounds(group.getBounds(), { padding: [40,40] });
+        } catch (err) {
+          console.warn('Leaflet failed to initialize', err);
+          document.getElementById('places-map').style.display = 'none';
+        }
+      }
+
+      // Wait a bit so the map container is visible then init
+      window.addEventListener('load', () => {
+        // Slight delay avoids "map container not sized" issues
+        setTimeout(initMap, 300);
+      });
+    })();
+  </script>
+</section>
+    
     <section id="interests" data-aos="fade-up">
         <div class="container">
             <h2 class="section-title">My Interests</h2>
